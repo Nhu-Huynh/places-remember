@@ -1,0 +1,47 @@
+{% extends "layout.html" %}
+{% load socialaccount %}
+
+{% block title %}
+Home
+{% endblock title %}
+
+{% block content %}
+    <h1>Home</h1>
+    <p>Check out <a href="/about">About</a> page.</p>
+
+    {% if user.is_authenticated %}
+        <p>you are siged in as {{ user.email }}</p>
+
+        <img src="{{ user.socialaccount_set.all.0.get_avatar_url }}" alt="User Avatar">
+
+        <section>
+            <h1>Places List</h1>
+            <a href="{% url 'places:new' %}">New Place</a>
+
+            {% if places %}
+                <ul>
+                    {% for place in places %}
+                        <article>
+                            <h2>
+                                {% comment %} <a href="{% url 'places:page' slug=place.slug %}">{{ place.name }}</a>                         
+                                {% endcomment %}
+                                {{ place.name }}
+                            </h2>
+                            <p>{{ place.comment }}</p>
+                            <p>{{ place.date }}</p>
+                            <p>By {{ place.author }}</p>
+                        </article>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p>YOU HAVE NO MEMORIES</p>
+            {% endif %}                  
+        </section>
+
+        <a href="logout">Logout</a>
+    {% else %}
+        <h2>Welcome to Places Remember!!!!!</h2>
+        <a href="{% provider_login_url 'google' %}?next=/">Login with Google to add memories</a>
+    {% endif %}
+
+{% endblock content %}
