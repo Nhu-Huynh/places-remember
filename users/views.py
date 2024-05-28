@@ -9,11 +9,11 @@ def home(request):
 
     places = Place.objects.raw('SELECT * FROM places_place WHERE author_id = %s ORDER BY date DESC', [request.user.id])
 
-    print(places)
+    # print(places)
 
     if request.user.is_authenticated:
         print('user authenticated')
-        print(request.user.id)
+        # print(request.user.id)
         return render(request, 'home.html', { 'places': places })
     else:
         print('no user')

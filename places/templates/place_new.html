@@ -1,18 +1,75 @@
-{% extends "layout.html" %} 
-
-{% if user.is_authenticated %}
-    {% block title %} 
-        New Place
-    {% endblock title %} 
-
-    {% block content %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{% if update %}Update{% else %}Add{% endif %} a Place</title>
+    <link 
+        rel="stylesheet" 
+        href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+        crossorigin=""/>
+    <script 
+        src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+        crossorigin="">
+    </script>
+    <style>
+        #map {
+            height: 400px;
+            width: 100%;
+        }
+        img.marker {
+            filter: hue-rotate(300deg);
+        }
+    </style>
+</head>
+<body>
+    {% if user.is_authenticated %}
         <section>
-            <h1>New Place</h1>
-            <form action="{% url 'places:new' %}" method='post' enctype='multipart/form-data'>
+            <h1>
+                {% if update %}
+                    Update place
+                {% else %}
+                    Add place
+                {% endif %}
+            </h1>
+            <form method='post' enctype='multipart/form-data'>
                 {% csrf_token %}
                 {{ form }}
-                <button>Add place</button>
+                <div id="map"></div>
+
+                <button>
+                    {% if update %}
+                        Update
+                    {% else %}
+                        Add
+                    {% endif %}
+                </button>
             </form>
         </section>
-    {% endblock content %}
-{% endif %}
+    {% endif %}
+
+    <script>
+        var initialLat = {{ form.latitude.value|default:'51.505' }};
+        var initialLng = {{ form.longitude.value|default:'-0.09' }};
+        var map = L.map('map').setView([initialLat, initialLng], 13);
+        
+        L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+            attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMappp</a>'
+        }).addTo(map);
+
+        var marker = L.marker([initialLat, initialLng]).addTo(map);
+        marker._icon.classList.add("marker");
+        marker.bindPopup("I am here!").openPopup();
+
+        map.on('click', function(e) {
+            var lat = e.latlng.lat;
+            var lng = e.latlng.lng;
+            document.getElementById('id_latitude').value = lat;
+            document.getElementById('id_longitude').value = lng;
+            marker.setLatLng(e.latlng).openPopup();
+        });
+    </script>
+</body>
+</html>
+

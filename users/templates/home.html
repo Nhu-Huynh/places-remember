@@ -16,20 +16,21 @@ Home
 
         <section>
             <h1>Places List</h1>
-            <a href="{% url 'places:new' %}">New Place</a>
+            <a href="{% url 'places:place_new' %}">New Place</a>
 
             {% if places %}
                 <ul>
                     {% for place in places %}
                         <article>
                             <h2>
-                                {% comment %} <a href="{% url 'places:page' slug=place.slug %}">{{ place.name }}</a>                         
-                                {% endcomment %}
                                 {{ place.name }}
                             </h2>
-                            <p>{{ place.comment }}</p>
-                            <p>{{ place.date }}</p>
-                            <p>By {{ place.author }}</p>
+                            <p>{{ place.comments }}</p>
+                            <p>{{ place.latitude }} - {{ place.longitude }}</p>    
+                            {% comment %} <p>{{ place.date }}</p>
+                            <p>By {{ place.author }}</p> {% endcomment %}
+                            <a href="{% url 'places:place_update' place.id %}">Update</a>
+                            <a href="{% url 'places:place_delete' place.id %}">Delete</a>
                         </article>
                     {% endfor %}
                 </ul>

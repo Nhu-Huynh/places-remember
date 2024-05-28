@@ -4,7 +4,7 @@ from . import views
 app_name = 'places'
 
 urlpatterns = [
-    # path('', views.places_list, name='list'),
-    path('new/', views.place_new, name='new'),
-    # path('<slug:slug>', views.place_page, name='page'),
+    path('new/', views.place_new_view, name='place_new'),
+    path('edit/<int:place_id>/', views.place_update_view, name='place_update'),
+    path('delete/<int:place_id>/', views.place_delete_view, name='place_delete'),
 ]

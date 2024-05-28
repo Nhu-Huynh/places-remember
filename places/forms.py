@@ -1,7 +1,11 @@
-from django.forms import ModelForm
+from django import forms
 from . import models
 
-class CreatePlace(ModelForm):
+class PlaceForm(forms.ModelForm):
     class Meta:
         model = models.Place
-        fields = ['name', 'comment', 'slug', 'banner']
+        fields = ['name', 'latitude', 'longitude', 'comments', ]
+        widgets = {
+            'latitude': forms.HiddenInput(),
+            'longitude': forms.HiddenInput(),
+        }
