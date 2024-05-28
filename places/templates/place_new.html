@@ -2,16 +2,8 @@
 <html>
 <head>
     <title>{% if update %}Update{% else %}Add{% endif %} a Place</title>
-    <link 
-        rel="stylesheet" 
-        href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
-        crossorigin=""/>
-    <script 
-        src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
-        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
-        crossorigin="">
-    </script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
     <style>
         #map {
             height: 400px;
@@ -44,10 +36,13 @@
                         Add
                     {% endif %}
                 </button>
+                <a href="{% url 'users:home' %}">Cancel</a>
             </form>
         </section>
     {% endif %}
-
+    
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
     <script>
         var initialLat = {{ form.latitude.value|default:'51.505' }};
         var initialLng = {{ form.longitude.value|default:'-0.09' }};
@@ -69,6 +64,18 @@
             document.getElementById('id_longitude').value = lng;
             marker.setLatLng(e.latlng).openPopup();
         });
+
+        L.Control.geocoder({
+            defaultMarkGeocode: false
+        })
+        .on('markgeocode', function(e) {
+            var latlng = e.geocode.center;
+            map.setView(latlng, 13);
+            marker.setLatLng(latlng);
+            document.getElementById('id_latitude').value = latlng.lat;
+            document.getElementById('id_longitude').value = latlng.lng;
+        })
+        .addTo(map);
     </script>
 </body>
 </html>
