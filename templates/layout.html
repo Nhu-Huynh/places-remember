@@ -8,26 +8,43 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>
         {% block title %}
-            Django App
+            Places Remember
         {% endblock %}
     </title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
     <link rel="stylesheet" href="{% static 'css/home.css' %}">
+    
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
     <script src="{% static 'js/index.js' %}" defer></script>
 </head>
 <body>
     <nav>
-        <a href="/">
-            <span role='img' aria-label='Home'>🏠</span>
-            Home
-        </a>
-        <a href="/about">
-            <span role='img' aria-label='About'>🎀</span>            
-            About
-        </a>
+        <div class="left_content">
+            <a href="/">
+                <div class="btn nav_btn">Home</div>
+            </a>
+            <a href="/about">
+                <div class="btn nav_btn">About</div>
+            </a>
+        </div>
+        <div class="right_content">
+            {% if user.is_authenticated %}
+                <img class="avatar" src="{{ user.socialaccount_set.all.0.get_avatar_url }}" alt="User Avatar">
+                <div class="username">{{ user.username }}</div>
+                <a href="logout">
+                    <div class="btn logout_btn">Logout</div>
+                </a>
+            {% else %}
+                <a href="{% provider_login_url 'google' %}?next=/">
+                    <div class="btn login_btn">Log in with Google</div>
+                </a>
+            {% endif %}
+        </div>
     </nav>
-    <main>
-        {% block content %}
-        {% endblock %}
-    </main>
+
+    {% block content %}
+    {% endblock %}
 </body>
 </html>

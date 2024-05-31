@@ -1,82 +1,93 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>{% if update %}Update{% else %}Add{% endif %} a Place</title>
-    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
-    <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
-    <style>
-        #map {
-            height: 400px;
-            width: 100%;
-        }
-        img.marker {
-            filter: hue-rotate(300deg);
-        }
-    </style>
-</head>
-<body>
+{% extends "layout.html" %}
+{% load socialaccount %}
+
+{% block title %}
+    {% if update %}Update{% else %}Add{% endif %} a Place
+{% endblock title %}
+
+{% block content %}
     {% if user.is_authenticated %}
         <section>
-            <h1>
+            <div class="new_form_title">
                 {% if update %}
                     Update place
                 {% else %}
                     Add place
                 {% endif %}
-            </h1>
-            <form method='post' enctype='multipart/form-data'>
+            </div>
+            <form class="new_form" method='post' enctype='multipart/form-data'>
                 {% csrf_token %}
-                {{ form }}
+                
+                {% for field in form %}
+                    {% if field not in form.hidden_fields %}
+                        <div class="form_field">
+                            <label for="{{ field.id_for_label }}">{{ field.label_tag }}</label>
+                            {{ field }}
+
+                            {% if field.errors %}
+                                <ul class="error-list">
+                                    {% for error in field.errors %}
+                                        <li>{{ error }}</li>
+                                    {% endfor %}
+                                </ul>
+                            {% endif %}
+
+                            {% if field.help_text %}
+                                <p class="help-text">{{ field.help_text }}</p>
+                            {% endif %}
+                        </div>
+                    {% endif %}
+                {% endfor %}
+
                 <div id="map"></div>
 
-                <button>
-                    {% if update %}
-                        Update
-                    {% else %}
-                        Add
-                    {% endif %}
-                </button>
-                <a href="{% url 'users:home' %}">Cancel</a>
+                <div class="form_btn_list">
+                    <button class="submit_form_btn" type="submit">
+                        {% if update %}
+                            Update
+                        {% else %}
+                            Add
+                        {% endif %}
+                    </button>
+                    <a class="cancel_form_btn" href="{% url 'users:home' %}">Cancel</a>
+                </div>
             </form>
         </section>
-    {% endif %}
-    
-    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-    <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
-    <script>
-        var initialLat = {{ form.latitude.value|default:'51.505' }};
-        var initialLng = {{ form.longitude.value|default:'-0.09' }};
-        var map = L.map('map').setView([initialLat, initialLng], 13);
         
-        L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            maxZoom: 19,
-            attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMappp</a>'
-        }).addTo(map);
+        <script>
+            var initialLat = {{ form.latitude.value|default:'51.505' }};
+            var initialLng = {{ form.longitude.value|default:'-0.09' }};
+            var map = L.map('map').setView([initialLat, initialLng], 13);
+            
+            L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                maxZoom: 19,
+                attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMappp</a>'
+            }).addTo(map);
+    
+            var marker = L.marker([initialLat, initialLng]).addTo(map);
+            marker._icon.classList.add("marker");
+            marker.bindPopup("I am here!").openPopup();
+    
+            map.on('click', function(e) {
+                var lat = e.latlng.lat;
+                var lng = e.latlng.lng;
+                document.getElementById('id_latitude').value = lat;
+                document.getElementById('id_longitude').value = lng;
+                marker.setLatLng(e.latlng).openPopup();
+            });
+    
+            L.Control.geocoder({
+                defaultMarkGeocode: false
+            })
+            .on('markgeocode', function(e) {
+                var latlng = e.geocode.center;
+                map.setView(latlng, 13);
+                marker.setLatLng(latlng);
+                document.getElementById('id_latitude').value = latlng.lat;
+                document.getElementById('id_longitude').value = latlng.lng;
+            })
+            .addTo(map);
+        </script>
+    {% endif %}
 
-        var marker = L.marker([initialLat, initialLng]).addTo(map);
-        marker._icon.classList.add("marker");
-        marker.bindPopup("I am here!").openPopup();
-
-        map.on('click', function(e) {
-            var lat = e.latlng.lat;
-            var lng = e.latlng.lng;
-            document.getElementById('id_latitude').value = lat;
-            document.getElementById('id_longitude').value = lng;
-            marker.setLatLng(e.latlng).openPopup();
-        });
-
-        L.Control.geocoder({
-            defaultMarkGeocode: false
-        })
-        .on('markgeocode', function(e) {
-            var latlng = e.geocode.center;
-            map.setView(latlng, 13);
-            marker.setLatLng(latlng);
-            document.getElementById('id_latitude').value = latlng.lat;
-            document.getElementById('id_longitude').value = latlng.lng;
-        })
-        .addTo(map);
-    </script>
-</body>
-</html>
-
+{% endblock content %}

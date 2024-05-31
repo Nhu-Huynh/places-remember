@@ -6,43 +6,72 @@ Home
 {% endblock title %}
 
 {% block content %}
-    <h1>Home</h1>
-    <p>Check out <a href="/about">About</a> page.</p>
-
     {% if user.is_authenticated %}
-        <p>you are siged in as {{ user.email }}</p>
+        <section class="place_list_section">
+            <div class="title">Places List</div>
+            <div class="wrap_add_btn">
+                <a class="add_btn" href="{% url 'places:place_new' %}">
+                    ADD A MEMORY
+                </a>
+            </div>
 
-        <img src="{{ user.socialaccount_set.all.0.get_avatar_url }}" alt="User Avatar">
-
-        <section>
-            <h1>Places List</h1>
-            <a href="{% url 'places:place_new' %}">New Place</a>
 
             {% if places %}
-                <ul>
+                <div class="place_list">
                     {% for place in places %}
-                        <article>
-                            <h2>
-                                {{ place.name }}
-                            </h2>
-                            <p>{{ place.comments }}</p>
-                            <p>{{ place.latitude }} - {{ place.longitude }}</p>    
-                            {% comment %} <p>{{ place.date }}</p>
-                            <p>By {{ place.author }}</p> {% endcomment %}
-                            <a href="{% url 'places:place_update' place.id %}">Update</a>
-                            <a href="{% url 'places:place_delete' place.id %}">Delete</a>
-                        </article>
+                        <div class="place_item">
+                            <div class="left_content">
+                                <div class="place_name">
+                                    {{ place.name }}
+                                </div>
+                                <div class="place_comments">{{ place.comments }}</div>
+                                <div class="place_positions">{{ place.latitude }} - {{ place.longitude }}</div>    
+                                <div class="place_btn">
+                                    <a href="{% url 'places:place_update' place.id %}">
+                                        <div class="update_btn">Update</div>
+                                    </a>
+                                    <a href="{% url 'places:place_delete' place.id %}">
+                                        <div class="delete_btn">Delete</div>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="right_content">
+                                <div id="map_{{ place.id }}" class="map" style="height: 200px;"></div>
+                            </div>
+                        </div>
                     {% endfor %}
-                </ul>
+                </div>
             {% else %}
                 <p>YOU HAVE NO MEMORIES</p>
             {% endif %}                  
         </section>
 
-        <a href="logout">Logout</a>
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                {% for place in places %}
+                    var map_{{ place.id }} = L.map("map_{{ place.id }}").setView([{{ place.latitude }}, {{ place.longitude }}], 5);
+                    
+                    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                        maxZoom: 19,
+                        attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMappp</a>'
+                    }).addTo(map_{{ place.id }});
+            
+                    var marker_{{ place.id }} = L.marker([{{ place.latitude }}, {{ place.longitude }}]).addTo(map_{{ place.id }});
+                    marker_{{ place.id }}.bindPopup("{{ place.name }}").openPopup();
+                {% endfor %}
+
+                const commentsElements = document.querySelectorAll(".place_comments");
+                commentsElements.forEach(function(element) {
+                    const originalText = element.textContent;
+                    const truncatedText = originalText.slice(0, 120); // Limit to 120 characters
+                    if (originalText.length > 120) {
+                        element.textContent = truncatedText + "..."; // Add ellipsis
+                    }
+                });
+            }); 
+        </script>
     {% else %}
         <h2>Welcome to Places Remember!!!!!</h2>
-        <a href="{% provider_login_url 'google' %}?next=/">Login with Google to add memories</a>
     {% endif %}
 
 {% endblock content %}

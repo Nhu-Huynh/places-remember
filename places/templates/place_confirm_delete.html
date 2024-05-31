@@ -6,11 +6,13 @@
     {% endblock title %} 
 
     {% block content %}
-        <h2>Are you sure to delete {{ place.name }}?</h2>
+        <div class="confirm_delete_form_title">Are you sure to delete {{ place.name }}?</div>
         <form method="post">
             {% csrf_token %}
-            <button type='submit'>Delete</button>
-            <a href="{% url 'users:home' %}">Cancel</a>
+            <div class="form_btn_list">
+                <button class="submit_form_btn" type='submit'>Delete</button>
+                <a class="cancel_form_btn" href="{% url 'users:home' %}">Cancel</a>
+            </div>
         </form>
     {% endblock content %}
 {% endif %}
