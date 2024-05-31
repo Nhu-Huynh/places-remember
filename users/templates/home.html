@@ -9,41 +9,50 @@ Home
     {% if user.is_authenticated %}
         <section class="place_list_section">
             <div class="title">Places List</div>
-            <div class="wrap_add_btn">
-                <a class="add_btn" href="{% url 'places:place_new' %}">
-                    ADD A MEMORY
-                </a>
-            </div>
-
-
-            {% if places %}
-                <div class="place_list">
-                    {% for place in places %}
-                        <div class="place_item">
-                            <div class="left_content">
-                                <div class="place_name">
-                                    {{ place.name }}
-                                </div>
-                                <div class="place_comments">{{ place.comments }}</div>
-                                <div class="place_positions">{{ place.latitude }} - {{ place.longitude }}</div>    
-                                <div class="place_btn">
-                                    <a href="{% url 'places:place_update' place.id %}">
-                                        <div class="update_btn">Update</div>
-                                    </a>
-                                    <a href="{% url 'places:place_delete' place.id %}">
-                                        <div class="delete_btn">Delete</div>
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="right_content">
-                                <div id="map_{{ place.id }}" class="map" style="height: 200px;"></div>
-                            </div>
-                        </div>
-                    {% endfor %}
+            <div class="wrap_home_content">
+                <div class="wrap_add_btn">
+                    <a class="add_btn" href="{% url 'places:place_new' %}">
+                        ADD A MEMORY
+                    </a>
                 </div>
-            {% else %}
-                <p>YOU HAVE NO MEMORIES</p>
-            {% endif %}                  
+    
+                {% if places %}
+                    <div class="place_list">
+                        {% for place in places %}
+                            <div class="place_item">
+                                <div class="left_content">
+                                    <div class="place_name">
+                                        {{ place.name }}
+                                    </div>
+                                    <div class="place_comments">{{ place.comments }}</div>
+                                    <div class="place_positions">{{ place.latitude }} - {{ place.longitude }}</div>    
+                                    <div class="place_btn">
+                                        <a href="{% url 'places:place_update' place.id %}">
+                                            <div class="update_btn">Update</div>
+                                        </a>
+                                        <a href="{% url 'places:place_delete' place.id %}">
+                                            <div class="delete_btn">Delete</div>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="right_content">
+                                    <div id="map_{{ place.id }}" class="map" style="height: 200px;"></div>
+                                    <div class="right_place_btn">
+                                        <a href="{% url 'places:place_update' place.id %}">
+                                            <div class="update_btn">Update</div>
+                                        </a>
+                                        <a href="{% url 'places:place_delete' place.id %}">
+                                            <div class="delete_btn">Delete</div>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <p>YOU HAVE NO MEMORIES</p>
+                {% endif %}                  
+            </div>
         </section>
 
         <script>
