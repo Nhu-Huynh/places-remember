@@ -15,7 +15,7 @@ Travel Memory Keeper
                         ADD A MEMORY
                     </a>
                 </div>
-    
+
                 {% if places %}
                     <div class="place_list">
                         {% for place in places %}
@@ -51,7 +51,7 @@ Travel Memory Keeper
                     </div>
                 {% else %}
                     <p>YOU HAVE NO MEMORIES</p>
-                {% endif %}                  
+                {% endif %}
             </div>
         </section>
 
@@ -59,12 +59,12 @@ Travel Memory Keeper
             document.addEventListener('DOMContentLoaded', function () {
                 {% for place in places %}
                     var map_{{ place.id }} = L.map("map_{{ place.id }}").setView([{{ place.latitude }}, {{ place.longitude }}], 5);
-                    
+
                     L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
                         maxZoom: 19,
                         attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMappp</a>'
                     }).addTo(map_{{ place.id }});
-            
+
                     var marker_{{ place.id }} = L.marker([{{ place.latitude }}, {{ place.longitude }}]).addTo(map_{{ place.id }});
                     marker_{{ place.id }}.bindPopup("{{ place.name }}").openPopup();
                 {% endfor %}
@@ -77,7 +77,7 @@ Travel Memory Keeper
                         element.textContent = truncatedText + "..."; // Add ellipsis
                     }
                 });
-            }); 
+            });
         </script>
     {% else %}
         <div class="title">Welcome to Travel Memory Keeper! 🌍✨</div>

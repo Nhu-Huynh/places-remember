@@ -1,9 +1,9 @@
-{% extends "layout.html" %} 
+{% extends "layout.html" %}
 
 {% if user.is_authenticated %}
-    {% block title %} 
+    {% block title %}
         Delete Place
-    {% endblock title %} 
+    {% endblock title %}
 
     {% block content %}
         <div class="confirm_delete_form_title">Are you sure to delete {{ place.name }}?</div>

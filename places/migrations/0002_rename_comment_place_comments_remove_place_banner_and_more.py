@@ -6,31 +6,31 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('places', '0001_initial'),
+        ("places", "0001_initial"),
     ]
 
     operations = [
         migrations.RenameField(
-            model_name='place',
-            old_name='comment',
-            new_name='comments',
+            model_name="place",
+            old_name="comment",
+            new_name="comments",
         ),
         migrations.RemoveField(
-            model_name='place',
-            name='banner',
+            model_name="place",
+            name="banner",
         ),
         migrations.RemoveField(
-            model_name='place',
-            name='slug',
+            model_name="place",
+            name="slug",
         ),
         migrations.AddField(
-            model_name='place',
-            name='latitude',
+            model_name="place",
+            name="latitude",
             field=models.FloatField(default=10.659190899078881),
         ),
         migrations.AddField(
-            model_name='place',
-            name='longitude',
+            model_name="place",
+            name="longitude",
             field=models.FloatField(default=106.72701745885105),
         ),
     ]

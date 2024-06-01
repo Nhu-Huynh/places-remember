@@ -17,7 +17,7 @@
             </div>
             <form class="new_form" method='post' enctype='multipart/form-data'>
                 {% csrf_token %}
-                
+
                 {% for field in form %}
                     {% if field not in form.hidden_fields %}
                         <div class="form_field">
@@ -53,21 +53,21 @@
                 </div>
             </form>
         </section>
-        
+
         <script>
             var initialLat = {{ form.latitude.value|default:'51.505' }};
             var initialLng = {{ form.longitude.value|default:'-0.09' }};
             var map = L.map('map').setView([initialLat, initialLng], 13);
-            
+
             L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
                 maxZoom: 19,
                 attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMappp</a>'
             }).addTo(map);
-    
+
             var marker = L.marker([initialLat, initialLng]).addTo(map);
             marker._icon.classList.add("marker");
             marker.bindPopup("I am here!").openPopup();
-    
+
             map.on('click', function(e) {
                 var lat = e.latlng.lat;
                 var lng = e.latlng.lng;
@@ -75,7 +75,7 @@
                 document.getElementById('id_longitude').value = lng;
                 marker.setLatLng(e.latlng).openPopup();
             });
-    
+
             L.Control.geocoder({
                 defaultMarkGeocode: false
             })

@@ -254,7 +254,7 @@ button {
     cursor: pointer;
     border: 2px solid #783d19;
     background-color: #783d19;
-} 
+}
 
 .cancel_form_btn:hover {
     cursor: pointer;
@@ -327,4 +327,3 @@ button {
 @media screen and (min-width: 1024px) and (max-width: 1200px) {
 
 }
-
