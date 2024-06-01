@@ -19,9 +19,6 @@ class Command(BaseCommand):
         client_id = os.getenv("GOOGLE_CLIENT_ID")
         client_secret = os.getenv("GOOGLE_CLIENT_SECRET")
 
-        print("client_id:", client_id)
-        print("client_secret:", client_secret)
-
         app.client_id = client_id
         app.secret = client_secret
         app.sites.add(site)

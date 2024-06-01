@@ -1,8 +1,11 @@
 # places-remember
 
-## Setup
+## Setup Google credentials
 ```
 pip install -r requirements.txt
+python setup.py
+
+python manage.py makemigrations
 python manage.py migrate
 python manage.py loaddata initial_data.json
 python manage.py set_google_credentials
@@ -10,8 +13,6 @@ python manage.py set_google_credentials
 
 ## Run Django server
 ```
-python manage.py makemigrations
-python manage.py migrate
 python manage.py runserver
 ```
 
