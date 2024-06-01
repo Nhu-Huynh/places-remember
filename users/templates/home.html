@@ -2,7 +2,7 @@
 {% load socialaccount %}
 
 {% block title %}
-Home
+Travel Memory Keeper
 {% endblock title %}
 
 {% block content %}
@@ -25,7 +25,7 @@ Home
                                         {{ place.name }}
                                     </div>
                                     <div class="place_comments">{{ place.comments }}</div>
-                                    <div class="place_positions">{{ place.latitude }} - {{ place.longitude }}</div>    
+                                    {% comment %} <div class="place_positions">{{ place.latitude }} - {{ place.longitude }}</div>     {% endcomment %}
                                     <div class="place_btn">
                                         <a href="{% url 'places:place_update' place.id %}">
                                             <div class="update_btn">Update</div>
@@ -80,7 +80,10 @@ Home
             }); 
         </script>
     {% else %}
-        <h2>Welcome to Places Remember!!!!!</h2>
+        <div class="title">Welcome to Travel Memory Keeper! 🌍✨</div>
+        <div class="home_desc">
+            Are you passionate about exploring new places? Do you want to capture the essence of your travel experiences and relive those magical moments? Look no further! Our web application is designed to help you create lasting memories of your adventures.
+        </div>
     {% endif %}
 
 {% endblock content %}

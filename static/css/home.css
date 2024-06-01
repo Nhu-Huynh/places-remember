@@ -74,12 +74,25 @@ nav .btn:hover {
 .title {
     color: #000;
     font-family: 'Roboto';
-    font-size: 40px;
+    font-size: 32px;
     font-style: normal;
     font-weight: 500;
     line-height: 100%;
     text-align: center;
     text-transform: uppercase;
+    margin-bottom: 10px;
+    letter-spacing: 0.5px;
+}
+
+.home_desc {
+    color: #000;
+    font-family: 'Roboto';
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 150%;
+    letter-spacing: 0.5px;
+    margin-top: 10px;
 }
 
 .place_list_section {

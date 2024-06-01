@@ -22,7 +22,7 @@
 <body>
     <nav>
         <div class="left_content">
-            <a href="/">
+            <a href="{% url "users:home" %}">
                 <div class="btn nav_btn">Home</div>
             </a>
             <a href="/about">
@@ -33,7 +33,7 @@
             {% if user.is_authenticated %}
                 <img class="avatar" src="{{ user.socialaccount_set.all.0.get_avatar_url }}" alt="User Avatar">
                 <div class="username">{{ user.username }}</div>
-                <a href="logout">
+                <a href="{% url "users:logout" %}">
                     <div class="btn logout_btn">Logout</div>
                 </a>
             {% else %}
