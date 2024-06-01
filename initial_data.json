@@ -1,0 +1,22 @@
+[
+    {
+      "model": "sites.site",
+      "pk": 3,
+      "fields": {
+        "domain": "http://127.0.0.1:8000",
+        "name": "http://127.0.0.1:8000"
+      }
+    },
+    {
+      "model": "socialaccount.socialapp",
+      "pk": 1,
+      "fields": {
+        "provider": "google",
+        "name": "Google",
+        "client_id": "",
+        "secret": "",
+        "key": "",
+        "sites": [3]
+      }
+    }
+  ]
