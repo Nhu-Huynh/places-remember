@@ -12,6 +12,7 @@ python manage.py set_google_credentials
 ```
 
 ## Run Django server
+- It may take a while for the Google Cloud to load the credentials. Restart the server in case cannot access the credentials.
 ```
 python manage.py runserver
 ```
