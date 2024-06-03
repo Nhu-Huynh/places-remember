@@ -16,9 +16,9 @@ Travel Memory Keeper
                     </a>
                 </div>
 
-                {% if places %}
+                {% if page_obj %}
                     <div class="place_list">
-                        {% for place in places %}
+                        {% for place in page_obj %}
                             <div class="place_item">
                                 <div class="left_content">
                                     <div class="place_name">
@@ -49,6 +49,31 @@ Travel Memory Keeper
                             </div>
                         {% endfor %}
                     </div>
+
+                    <div class="pagination">
+                        <div class="step-links">
+                            {% if page_obj.has_previous %}
+                                <a class="pagination_control" href="?page=1">&laquo; first</a>
+                                <a class="pagination_control" href="?page={{ page_obj.previous_page_number }}">previous</a>
+                            {% else %}
+                                <div class="pagination_control pagination_control_inactive">&laquo; first</div>
+                                <div class="pagination_control pagination_control_inactive">previous</div>
+                            {% endif %}
+
+                            <div class="current">
+                                Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+                            </div>
+
+                            {% if page_obj.has_next %}
+                                <a class="pagination_control" href="?page={{ page_obj.next_page_number }}">next</a>
+                                <a class="pagination_control" href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+                            {% else %}
+                                <div class="pagination_control pagination_control_inactive">next</div>
+                                <div class="pagination_control pagination_control_inactive">last &raquo;</div>
+                            {% endif %}
+
+                        </div>
+                    </div>
                 {% else %}
                     <p>YOU HAVE NO MEMORIES</p>
                 {% endif %}
@@ -57,7 +82,7 @@ Travel Memory Keeper
 
         <script>
             document.addEventListener('DOMContentLoaded', function () {
-                {% for place in places %}
+                {% for place in page_obj %}
                     var map_{{ place.id }} = L.map("map_{{ place.id }}").setView([{{ place.latitude }}, {{ place.longitude }}], 5);
 
                     L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {

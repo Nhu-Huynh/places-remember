@@ -194,6 +194,59 @@ img.marker {
     background-color: #7f4f24;
 }
 
+/* ----------------- PAGINATION --------------------- */
+
+.pagination {
+    text-align: center;
+    margin: 20px 0;
+}
+
+.step-links {
+    padding: 8px 15px;
+    background: #f4f4f4;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    width: fit-content;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+}
+
+.step-links a, .pagination_control {
+    color: #606c38;
+    text-decoration: none;
+    padding: 5px 10px;
+    margin: 0 5px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    transition: background-color 0.3s ease;
+}
+
+.step-links a:hover {
+    background-color: #606c38;
+    color: white;
+}
+
+.pagination_control_inactive {
+    background-color: #f8f8f8;
+}
+
+.current {
+    margin: 0 5px;
+    padding: 5px 10px;
+    background-color: #606c38;
+    color: white;
+    border-radius: 5px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 600px) {
+    .step-links a, .current {
+        padding: 3px 7px;
+        font-size: 0.85em;
+    }
+}
+
 /* ----------------- NEW FORM --------------------- */
 
 button {
