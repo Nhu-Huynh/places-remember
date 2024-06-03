@@ -8,29 +8,16 @@ from places.models import Place
 
 
 def home(request):
-    # places = Place.objects.all().order_by("-date")
+    if not request.user.is_authenticated:
+        return redirect("/")
 
-    place_list = Place.objects.raw(
-        "SELECT * FROM places_place WHERE author_id = %s ORDER BY date DESC",
-        [request.user.id],
-    )
-
-    # print(places)
-
-    paginator = Paginator(place_list, 2)
+    place_list = Place.objects.filter(author=request.user).order_by("-date")
+    paginator = Paginator(place_list, 5)
 
     page_number = request.GET.get("page")
     page_obj = paginator.get_page(page_number)
 
     return render(request, "home.html", {"page_obj": page_obj})
-
-    # if request.user.is_authenticated:
-    #     print("user authenticated")
-    #     # print(request.user.id)
-    #     return render(request, "home.html", {"places": places})
-    # else:
-    #     print("no user")
-    #     return render(request, "home.html")
 
 
 def logout_view(request):

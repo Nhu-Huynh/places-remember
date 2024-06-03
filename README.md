@@ -1,14 +1,21 @@
-# places-remember
+# Places Remember
 
 ## Setup Google credentials
 ```
 pip install -r requirements.txt
-python setup.py
+python setup.py  # Please input your Google credentials (client_id and client_secret)
 
 python manage.py makemigrations
 python manage.py migrate
 python manage.py loaddata initial_data.json
 python manage.py set_google_credentials
+```
+
+## Testing
+- Run tests for the 'places' and 'users' apps. These should all pass.
+```
+python3 manage.py test places.tests
+python3 manage.py test users.tests
 ```
 
 ## Run Django server
