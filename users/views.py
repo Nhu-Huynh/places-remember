@@ -8,16 +8,19 @@ from places.models import Place
 
 
 def home(request):
-    if not request.user.is_authenticated:
-        return redirect("/")
+    if request.user.is_authenticated:
+        # print("user authenticated")
 
-    place_list = Place.objects.filter(author=request.user).order_by("-date")
-    paginator = Paginator(place_list, 5)
+        place_list = Place.objects.filter(author=request.user).order_by("-date")
+        paginator = Paginator(place_list, 5)
 
-    page_number = request.GET.get("page")
-    page_obj = paginator.get_page(page_number)
+        page_number = request.GET.get("page")
+        page_obj = paginator.get_page(page_number)
 
-    return render(request, "home.html", {"page_obj": page_obj})
+        return render(request, "home.html", {"page_obj": page_obj})
+    else:
+        print("no user")
+        return render(request, "home.html")
 
 
 def logout_view(request):
