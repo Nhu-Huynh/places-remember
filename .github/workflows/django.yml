@@ -38,6 +38,11 @@ jobs:
             - name: Checkout # Step 2: Checkout the repository code
               uses: actions/checkout@v2 # Use the checkout action to checkout the code
 
+            - name: Set up .env file
+              run: |
+                echo "GOOGLE_CLIENT_ID=${{ secrets.GOOGLE_CLIENT_ID }}" > .env
+                echo "GOOGLE_CLIENT_SECRET=${{ secrets.GOOGLE_CLIENT_SECRET }}" >> .env
+
             - name: Test Places # Step 3: Run the tests for places
               run: docker-compose run web python manage.py test places.tests # Use Docker Compose to run the Django unit tests
 
