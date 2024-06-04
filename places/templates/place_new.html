@@ -1,10 +1,13 @@
 {% extends "layout.html" %}
 {% load socialaccount %}
-
 {% block title %}
-    {% if update %}Update{% else %}Add{% endif %} a Place
+    {% if update %}
+        Update
+    {% else %}
+        Add
+    {% endif %}
+    a Place
 {% endblock title %}
-
 {% block content %}
     {% if user.is_authenticated %}
         <section>
@@ -17,32 +20,23 @@
             </div>
             <form class="new_form" method='post' enctype='multipart/form-data'>
                 {% csrf_token %}
-
                 {% for field in form %}
                     {% if field not in form.hidden_fields %}
                         <div class="form_field">
                             <label for="{{ field.id_for_label }}">{{ field.label_tag }}</label>
                             {{ field }}
-
                             {% if field.errors %}
                                 <ul class="error-list">
-                                    {% for error in field.errors %}
-                                        <li>{{ error }}</li>
-                                    {% endfor %}
+                                    {% for error in field.errors %}<li>{{ error }}</li>{% endfor %}
                                 </ul>
                             {% endif %}
-
-                            {% if field.help_text %}
-                                <p class="help-text">{{ field.help_text }}</p>
-                            {% endif %}
+                            {% if field.help_text %}<p class="help-text">{{ field.help_text }}</p>{% endif %}
                         </div>
                     {% else %}
                         {{ field }}
                     {% endif %}
                 {% endfor %}
-
-                <div id="map"></div>
-
+                <div id="map" class="add_place_map"></div>
                 <div class="form_btn_list">
                     <button class="submit_form_btn" type="submit">
                         {% if update %}
@@ -55,7 +49,6 @@
                 </div>
             </form>
         </section>
-
         <script>
             var initialLat = {{ form.latitude.value|default:'51.505' }};
             var initialLng = {{ form.longitude.value|default:'-0.09' }};
@@ -91,5 +84,4 @@
             .addTo(map);
         </script>
     {% endif %}
-
 {% endblock content %}

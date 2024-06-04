@@ -1,8 +1,9 @@
 # your_app/management/commands/set_google_credentials.py
-from django.core.management.base import BaseCommand
+import os
+
 from allauth.socialaccount.models import SocialApp
 from django.contrib.sites.models import Site
-import os
+from django.core.management.base import BaseCommand
 from dotenv import load_dotenv
 
 load_dotenv()

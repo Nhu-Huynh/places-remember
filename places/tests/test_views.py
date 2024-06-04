@@ -1,7 +1,8 @@
-from django.test import TestCase, Client
 from django.contrib.auth.models import User
-from places.models import Place
+from django.test import Client, TestCase
 from django.urls import reverse
+
+from places.models import Place
 
 
 class PlaceViewTests(TestCase):

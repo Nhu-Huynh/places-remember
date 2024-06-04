@@ -59,8 +59,6 @@ nav .btn:hover {
 }
 
 .avatar {
-    width: 40px;
-    height: 40px;
     border-radius: 100%;
 }
 
@@ -144,9 +142,13 @@ nav .btn:hover {
     width: 45%;
 }
 
-#map {
+.map {
     height: 200px;
     width: 100%;
+}
+
+.add_place_map {
+    height: 400px;
 }
 
 img.marker {

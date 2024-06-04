@@ -1,12 +1,13 @@
-from django.test import TestCase, Client, RequestFactory
-from django.contrib.auth.models import User
-from places.models import Place
-from django.urls import reverse
+import os
 
 from allauth.socialaccount.models import SocialApp
+from django.contrib.auth.models import User
 from django.contrib.sites.shortcuts import get_current_site
-import os
+from django.test import Client, RequestFactory, TestCase
+from django.urls import reverse
 from dotenv import load_dotenv
+
+from places.models import Place
 
 load_dotenv()
 

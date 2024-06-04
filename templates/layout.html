@@ -1,50 +1,54 @@
 {% load socialaccount %}
-
 <!DOCTYPE html>
 {% load static %}
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>
-        {% block title %}
-            Places Remember
-        {% endblock title %}
-    </title>
-    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
-    <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
-    <link rel="stylesheet" href="{% static 'css/home.css' %}">
-
-    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-    <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
-    <script src="{% static 'js/index.js' %}" defer></script>
-</head>
-<body>
-    <nav>
-        <div class="left_content">
-            <a href="{% url "users:home" %}">
-                <div class="btn nav_btn">Home</div>
-            </a>
-            <a href="/about">
-                <div class="btn nav_btn">About</div>
-            </a>
-        </div>
-        <div class="right_content">
-            {% if user.is_authenticated %}
-                <img class="avatar" src="{{ user.socialaccount_set.all.0.get_avatar_url }}" alt="User Avatar">
-                <div class="username">{{ user.username }}</div>
-                <a href="{% url "users:logout" %}">
-                    <div class="btn logout_btn">Logout</div>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="keywords" content="" />
+        <meta name="description" content="" />
+        <title>
+            {% block title %}
+                Places Remember
+            {% endblock title %}
+        </title>
+        <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+        <link rel="stylesheet"
+              href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
+        <link rel="stylesheet" href="{% static 'css/home.css' %}">
+        <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+        <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
+        <script src="{% static 'js/index.js' %}" defer></script>
+    </head>
+    <body>
+        <nav>
+            <div class="left_content">
+                <a href="{% url "users:home" %}">
+                    <div class="btn nav_btn">Home</div>
                 </a>
-            {% else %}
-                <a href="{% provider_login_url 'google' %}?next=/">
-                    <div class="btn login_btn">Log in with Google</div>
+                <a href="{% url "about" %}">
+                    <div class="btn nav_btn">About</div>
                 </a>
-            {% endif %}
-        </div>
-    </nav>
-
-    {% block content %}
-    {% endblock content %}
-</body>
+            </div>
+            <div class="right_content">
+                {% if user.is_authenticated %}
+                    <img class="avatar"
+                         height="40px"
+                         width="40px"
+                         src="{{ user.socialaccount_set.all.0.get_avatar_url }}"
+                         alt="User Avatar">
+                    <div class="username">{{ user.username }}</div>
+                    <a href="{% url "users:logout" %}">
+                        <div class="btn logout_btn">Logout</div>
+                    </a>
+                {% else %}
+                    <a href="{% provider_login_url 'google' %}?next=/">
+                        <div class="btn login_btn">Log in with Google</div>
+                    </a>
+                {% endif %}
+            </div>
+        </nav>
+        {% block content %}
+        {% endblock content %}
+    </body>
 </html>

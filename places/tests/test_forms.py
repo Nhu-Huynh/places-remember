@@ -1,7 +1,8 @@
 from django import forms
-from django.test import TestCase
-from places.forms import PlaceForm
 from django.contrib.auth.models import User
+from django.test import TestCase
+
+from places.forms import PlaceForm
 
 
 class PlaceFormTest(TestCase):

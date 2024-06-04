@@ -1,29 +1,22 @@
 {% extends "layout.html" %}
 {% load socialaccount %}
-
 {% block title %}
-Travel Memory Keeper
+    Travel Memory Keeper
 {% endblock title %}
-
 {% block content %}
     {% if user.is_authenticated %}
         <section class="place_list_section">
             <div class="title">Places List</div>
             <div class="wrap_home_content">
                 <div class="wrap_add_btn">
-                    <a class="add_btn" href="{% url 'places:place_new' %}">
-                        ADD A MEMORY
-                    </a>
+                    <a class="add_btn" href="{% url 'places:place_new' %}">ADD A MEMORY</a>
                 </div>
-
                 {% if page_obj %}
                     <div class="place_list">
                         {% for place in page_obj %}
                             <div class="place_item">
                                 <div class="left_content">
-                                    <div class="place_name">
-                                        {{ place.name }}
-                                    </div>
+                                    <div class="place_name">{{ place.name }}</div>
                                     <div class="place_comments">{{ place.comments }}</div>
                                     {% comment %} <div class="place_positions">{{ place.latitude }} - {{ place.longitude }}</div>     {% endcomment %}
                                     <div class="place_btn">
@@ -36,7 +29,7 @@ Travel Memory Keeper
                                     </div>
                                 </div>
                                 <div class="right_content">
-                                    <div id="map_{{ place.id }}" class="map" style="height: 200px;"></div>
+                                    <div id="map_{{ place.id }}" class="map"></div>
                                     <div class="right_place_btn">
                                         <a href="{% url 'places:place_update' place.id %}">
                                             <div class="update_btn">Update</div>
@@ -49,29 +42,26 @@ Travel Memory Keeper
                             </div>
                         {% endfor %}
                     </div>
-
                     <div class="pagination">
                         <div class="step-links">
                             {% if page_obj.has_previous %}
-                                <a class="pagination_control" href="?page=1">&laquo; first</a>
-                                <a class="pagination_control" href="?page={{ page_obj.previous_page_number }}">previous</a>
+                                <a class="pagination_control" href="?page=1">« first</a>
+                                <a class="pagination_control"
+                                   href="?page={{ page_obj.previous_page_number }}">previous</a>
                             {% else %}
-                                <div class="pagination_control pagination_control_inactive">&laquo; first</div>
+                                <div class="pagination_control pagination_control_inactive">« first</div>
                                 <div class="pagination_control pagination_control_inactive">previous</div>
                             {% endif %}
-
-                            <div class="current">
-                                Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
-                            </div>
-
+                            <div class="current">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</div>
                             {% if page_obj.has_next %}
-                                <a class="pagination_control" href="?page={{ page_obj.next_page_number }}">next</a>
-                                <a class="pagination_control" href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+                                <a class="pagination_control"
+                                   href="?page={{ page_obj.next_page_number }}">next</a>
+                                <a class="pagination_control"
+                                   href="?page={{ page_obj.paginator.num_pages }}">last »</a>
                             {% else %}
                                 <div class="pagination_control pagination_control_inactive">next</div>
-                                <div class="pagination_control pagination_control_inactive">last &raquo;</div>
+                                <div class="pagination_control pagination_control_inactive">last »</div>
                             {% endif %}
-
                         </div>
                     </div>
                 {% else %}
@@ -79,7 +69,6 @@ Travel Memory Keeper
                 {% endif %}
             </div>
         </section>
-
         <script>
             document.addEventListener('DOMContentLoaded', function () {
                 {% for place in page_obj %}
@@ -110,5 +99,4 @@ Travel Memory Keeper
             Are you passionate about exploring new places? Do you want to capture the essence of your travel experiences and relive those magical moments? Look no further! Our web application is designed to help you create lasting memories of your adventures.
         </div>
     {% endif %}
-
 {% endblock content %}
