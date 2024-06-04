@@ -39,7 +39,7 @@ jobs:
               uses: actions/checkout@v2 # Use the checkout action to checkout the code
 
             - name: Test Places # Step 3: Run the tests for places
-              run: docker-compose run --rm web sh -c "python3 test places.tests" # Use Docker Compose to run the Django unit tests
+              run: docker-compose run web python manage.py test places.tests # Use Docker Compose to run the Django unit tests
 
             - name: Test Users # Step 4: Run the tests for users
-              run: docker-compose run --rm web sh -c "python3 test users.tests" # Use Docker Compose to run the Django unit tests
+              run: docker-compose run web python manage.py test users.tests # Use Docker Compose to run the Django unit tests
