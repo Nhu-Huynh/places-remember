@@ -12,8 +12,10 @@ python setup.py  # Please input your Google credentials (client_id and client_se
 ```
 docker-compose up --build
 ```
+- Go to **[Place Remeber app page](http://127.0.0.1:8000)**
 
 ### Testing
+- Run tests for the 'places' and 'users' apps. These should all pass.
 ```
 docker-compose run web python manage.py test places.tests
 docker-compose run web python manage.py test users.tests
@@ -40,6 +42,7 @@ python3 manage.py test users.tests
 ```
 python manage.py runserver
 ```
+- Go to **[Place Remeber app page](http://127.0.0.1:8000)**
 
 ### Use Django admin page
 - Create a superuser with
