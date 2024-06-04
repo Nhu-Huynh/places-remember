@@ -161,4 +161,3 @@ cython_debug/
 
 .DS_Store
 client_secret.json
-.pre-commit-config.yaml
