@@ -239,14 +239,6 @@ img.marker {
     border-radius: 5px;
 }
 
-/* Responsive adjustments */
-@media (max-width: 600px) {
-    .step-links a, .current {
-        padding: 3px 7px;
-        font-size: 0.85em;
-    }
-}
-
 /* ----------------- NEW FORM --------------------- */
 
 button {
@@ -368,6 +360,15 @@ button {
         position: absolute;
         bottom: 0;
         left: 0;
+    }
+
+    /* ---------- PAGINATION ----------- */
+    .step-links {
+        padding: 5px;
+    }
+    .step-links .pagination_control, .current {
+        padding: 5px;
+        font-size: 0.85em;
     }
 }
 
