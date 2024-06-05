@@ -57,8 +57,6 @@ SOCIALACCOUNT_PROVIDERS = {
         "AUTH_PARAMS": {
             "access_type": "online",
         },
-        # 'CLIENT_ID': '118608741363-heprf40d6iqvkemmg9ki2aub0qoqm1g6.apps.googleusercontent.com',
-        # 'SECRET': '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',
     }
 }
 
